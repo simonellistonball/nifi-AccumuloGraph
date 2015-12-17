@@ -14,7 +14,6 @@ import org.apache.nifi.processor.ProcessorInitializationContext;
 import org.apache.nifi.processor.Relationship;
 import org.apache.nifi.processor.util.StandardValidators;
 
-import edu.jhuapl.tinkerpop.AccumuloBulkIngester;
 import edu.jhuapl.tinkerpop.AccumuloGraphConfiguration;
 import edu.jhuapl.tinkerpop.AccumuloGraphConfiguration.InstanceType;
 
@@ -57,8 +56,8 @@ public abstract class AbstractAccumuloGraph extends AbstractProcessor {
 			.name("success").description("success").build();
 	protected List<PropertyDescriptor> descriptors;
 	protected Set<Relationship> relationships;
-	protected AccumuloBulkIngester ingestor;
-	private AccumuloGraphConfiguration cfg;
+	
+	protected AccumuloGraphConfiguration cfg;
 
 	public AbstractAccumuloGraph() {
 		super();
@@ -96,7 +95,7 @@ public abstract class AbstractAccumuloGraph extends AbstractProcessor {
 
 	@OnScheduled
 	public void onScheduled(final ProcessContext context) {
-
+		cfg = createConfig(context);
 	}
 
 	protected AccumuloGraphConfiguration createConfig(

@@ -35,9 +35,9 @@ import org.apache.nifi.flowfile.FlowFile;
 import org.apache.nifi.processor.ProcessContext;
 import org.apache.nifi.processor.ProcessSession;
 import org.apache.nifi.processor.exception.ProcessException;
+
 import edu.jhuapl.tinkerpop.AccumuloBulkIngester;
 import edu.jhuapl.tinkerpop.AccumuloBulkIngester.PropertyBuilder;
-import edu.jhuapl.tinkerpop.AccumuloGraphConfiguration;
 
 @Tags({ "accumulo" })
 @CapabilityDescription("Provide a description")
@@ -58,11 +58,9 @@ public class PutAccumuloGraphEdge extends AbstractAccumuloGraph {
 		}
 
 		try {
-			AccumuloGraphConfiguration cfg = createConfig(context);
+			AccumuloBulkIngester ingestor = new AccumuloBulkIngester(cfg);
 			boolean includeAttributes = context.getProperty(ADD_ATTRIBUTES)
 					.equals(TRUE);
-
-			ingestor = new AccumuloBulkIngester(cfg);
 
 			for (FlowFile flowFile : flowFiles) {
 				try {

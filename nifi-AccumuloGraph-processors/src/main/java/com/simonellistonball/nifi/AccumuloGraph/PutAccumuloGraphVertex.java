@@ -38,7 +38,6 @@ import org.apache.nifi.processor.exception.ProcessException;
 
 import edu.jhuapl.tinkerpop.AccumuloBulkIngester;
 import edu.jhuapl.tinkerpop.AccumuloBulkIngester.PropertyBuilder;
-import edu.jhuapl.tinkerpop.AccumuloGraphConfiguration;
 
 @Tags({ "accumulo" })
 @CapabilityDescription("Provide a description")
@@ -58,8 +57,6 @@ public class PutAccumuloGraphVertex extends AbstractAccumuloGraph {
 		try {
 			boolean includeAttributes = context.getProperty(ADD_ATTRIBUTES)
 					.equals(TRUE);
-
-			AccumuloGraphConfiguration cfg = createConfig(context);
 			AccumuloBulkIngester ingestor = new AccumuloBulkIngester(cfg);
 
 			for (FlowFile flowFile : flowFiles) {
